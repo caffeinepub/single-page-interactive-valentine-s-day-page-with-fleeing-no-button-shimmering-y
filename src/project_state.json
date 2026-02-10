@@ -1,10 +1,11 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 9,
-  "summary": "Single-page interactive Valentine's Day web page with playful/mischievous tone (pink/white theme, heart animations, Yes/No interaction, popup, parallax hearts) targeting Chrome on iPad, with a constraint to include/display only one image.",
+  "projectStateVersion": 11,
+  "summary": "Single-page interactive Valentine's Day web page with playful/mischievous tone (pink/white theme, heart animations, Yes/No interaction, parallax hearts) targeting cross-platform mobile/desktop (Android + iOS, touch-friendly), with a constraint to include/display only one image.",
   "architectural_notes": [
     "Target compatibility: Chrome on iPad (mobile/touch-friendly interactions).",
-    "Use clean HTML/CSS/JavaScript with minimal/no external dependencies."
+    "Use clean HTML/CSS/JavaScript with minimal/no external dependencies.",
+    "Ensure cross-platform touch support (Android+iOS) for interactive elements like the fleeing 'No' button; avoid reliance on hover-only behavior."
   ],
   "known_issues": [
     "User requested removing an image from the site (image not specified; likely the displayed/generated meme asset)."
@@ -106,6 +107,30 @@
         "REQ-12"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-remove-the-no-confirmation-popup-message-box-behavior-entirely-clicking-tapping-the-no-button-must-not-open-any-overlay-modal-instead-the-no-button-must-only-perform-the-fleeing-moving-behavior",
+      "title": "Remove the “No” confirmation popup/message box behavior entirely. Clicking/tapping the “No” button must not open any overlay/modal; instead, the “No” button must only perform the fleeing/moving behavior.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-fleeing-no-button-interaction-so-it-works-on-touch-devices-android-ios-as-well-as-desktop-on-touch-devices-the-no-button-must-move-away-when-the-user-attempts-to-interact-with-it-e-g-touch-start-pointer-down-achieving-the-same-comedically-hard-to-click-effect-as-desktop-hover-approach-behavior",
+      "title": "Update the fleeing “No” button interaction so it works on touch devices (Android/iOS) as well as desktop. On touch devices, the “No” button must move away when the user attempts to interact with it (e.g., touch start / pointer down), achieving the same comedically hard-to-click effect as desktop hover/approach behavior.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-remove-or-refactor-any-now-unused-code-paths-and-imports-introduced-solely-to-support-the-removed-no-confirmation-overlay-ensuring-the-codebase-has-no-dead-references-to-noconfirmationoverlay-or-its-related-state-handlers",
+      "title": "Remove or refactor any now-unused code paths and imports introduced solely to support the removed “No” confirmation overlay, ensuring the codebase has no dead references to `NoConfirmationOverlay` or its related state/handlers.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -134,12 +159,6 @@
       "status": "pending"
     },
     {
-      "id": "AR-5",
-      "summary": "If 'No' is clicked, show semi-transparent popup with blurred background, text 'Are you REALLY sure? 🤔', and tiny shaking animation",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
       "id": "AR-6",
       "summary": "Implement parallax background with multiple layers of differently sized hearts floating upward at varying speeds",
       "reqIds": [],
@@ -160,6 +179,12 @@
     {
       "id": "AR-9",
       "summary": "Allow changing/setting the deployment domain name again (must meet platform constraints: 5–50 chars, only letters/numbers/hyphens)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Make interactions work on both Android and iOS (touch), ensuring the 'No' button still moves/flees like on desktop without showing a popup/message box",
       "reqIds": [],
       "status": "pending"
     }

@@ -1,12 +1,11 @@
 # Specification
 
 ## Summary
-**Goal:** Allow the app’s deployment domain name to be changed again, with clear validation against platform rules.
+**Goal:** Make the fleeing “No” button work consistently on Android/iOS and desktop without showing any confirmation popup/overlay.
 
 **Planned changes:**
-- Add/restore a supported UI and/or settings flow that lets users set or update the deployment domain name multiple times (not one-time-only).
-- Validate the domain value to ensure it is 5–50 characters long and contains only letters, numbers, and hyphens.
-- Show clear English validation errors that state which rule was violated (length vs. invalid characters).
-- Ensure applying a valid domain updates the deployment domain without altering existing Valentine’s Day page behavior.
+- Remove the “No” confirmation overlay/modal behavior entirely so interacting with “No” only triggers the flee/move behavior.
+- Update the “No” button interaction to use touch/pointer-capable events so it moves away on mobile (Android/iOS) as users attempt to tap it, while preserving the existing desktop behavior.
+- Clean up any now-unused overlay-related imports, state, handlers, and references (including removing `NoConfirmationOverlay` usage from `frontend/src/App.tsx`).
 
-**User-visible outcome:** Users can change the deployment domain name again; invalid domain entries are rejected with clear English messages, and valid domains are accepted and applied.
+**User-visible outcome:** On mobile and desktop, the “No” button comedically moves away when the user tries to interact with it, and no popup/modal/confirmation UI appears.

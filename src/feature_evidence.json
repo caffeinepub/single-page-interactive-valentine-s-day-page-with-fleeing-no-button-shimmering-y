@@ -2,12 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-enable-changing-setting-the-app-s-deployment-domain-name-again-and-validate-the-domain-against-the-platform-rules-5-50-characters-only-letters-numbers-and-hyphens-if-the-provided-domain-is-invalid-show-a-clear-english-validation-error-indicating-the-rule-that-was-violated",
-      "featureTitle": "Enable changing/setting the app’s deployment domain name again, and validate the domain against the platform rules (5–50 characters; only letters, numbers, and hyphens). If the provided domain is invalid, show a clear English validation error indicating the rule that was violated.",
+      "featureId": "feature-remove-the-no-confirmation-popup-message-box-behavior-entirely-clicking-tapping-the-no-button-must-not-open-any-overlay-modal-instead-the-no-button-must-only-perform-the-fleeing-moving-behavior",
+      "featureTitle": "Remove the “No” confirmation popup/message box behavior entirely. Clicking/tapping the “No” button must not open any overlay/modal; instead, the “No” button must only perform the fleeing/moving behavior.",
       "files": [
         "frontend/src/App.tsx",
-        "frontend/src/features/deployment/DeploymentDomainDialog.tsx",
-        "frontend/src/features/deployment/validateDomain.ts"
+        "frontend/src/features/valentine/components/NoConfirmationOverlay.tsx"
       ],
       "components": [
         "core-infrastructure@1.0.2",
@@ -17,7 +16,45 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-12"
+        "REQ-13"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-fleeing-no-button-interaction-so-it-works-on-touch-devices-android-ios-as-well-as-desktop-on-touch-devices-the-no-button-must-move-away-when-the-user-attempts-to-interact-with-it-e-g-touch-start-pointer-down-achieving-the-same-comedically-hard-to-click-effect-as-desktop-hover-approach-behavior",
+      "featureTitle": "Update the fleeing “No” button interaction so it works on touch devices (Android/iOS) as well as desktop. On touch devices, the “No” button must move away when the user attempts to interact with it (e.g., touch start / pointer down), achieving the same comedically hard-to-click effect as desktop hover/approach behavior.",
+      "files": [
+        "frontend/src/features/valentine/components/CTAButtons.tsx",
+        "frontend/src/features/valentine/hooks/useFleeingButton.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-14"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-remove-or-refactor-any-now-unused-code-paths-and-imports-introduced-solely-to-support-the-removed-no-confirmation-overlay-ensuring-the-codebase-has-no-dead-references-to-noconfirmationoverlay-or-its-related-state-handlers",
+      "featureTitle": "Remove or refactor any now-unused code paths and imports introduced solely to support the removed “No” confirmation overlay, ensuring the codebase has no dead references to `NoConfirmationOverlay` or its related state/handlers.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/features/valentine/index.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-15"
       ],
       "confidence": "high"
     }

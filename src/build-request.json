@@ -1,39 +1,85 @@
 {
   "kind": "build_request",
-  "title": "Allow changing the deployment domain name again",
+  "title": "Make the fleeing “No” button work on Android/iOS without showing any popup overlay",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-12",
-      "text": "Enable changing/setting the app’s deployment domain name again, and validate the domain against the platform rules (5–50 characters; only letters, numbers, and hyphens). If the provided domain is invalid, show a clear English validation error indicating the rule that was violated.",
-      "target": "unknown",
+      "id": "REQ-13",
+      "text": "Remove the “No” confirmation popup/message box behavior entirely. Clicking/tapping the “No” button must not open any overlay/modal; instead, the “No” button must only perform the fleeing/moving behavior.",
+      "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-1"
+          "msg-6"
         ],
         "quotes": [
-          "can i change the domain name again"
+          "make this feature workable for all user like android and ios both too dont give a message box just make the no button moving like it works in desktop"
         ]
       },
       "acceptanceCriteria": [
-        "There is a supported way to set/update the deployment domain name for this app again (not a one-time-only setting).",
-        "Any attempted domain value that contains disallowed characters (anything other than letters, numbers, hyphens) is rejected with an English validation message.",
-        "Any attempted domain value shorter than 5 characters or longer than 50 characters is rejected with an English validation message.",
-        "A valid domain value (5–50 chars, letters/numbers/hyphens only) is accepted and used for the deployment domain without breaking the existing app behavior."
+        "On desktop, clicking the “No” button does not open any overlay/modal and does not show any confirmation UI.",
+        "The component `NoConfirmationOverlay` is not rendered anywhere in the app (no UI, no state toggles that display it).",
+        "There are no remaining user-facing strings related to the removed confirmation overlay (e.g., “Are you REALLY sure?”) displayed anywhere in the UI."
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "text": "Update the fleeing “No” button interaction so it works on touch devices (Android/iOS) as well as desktop. On touch devices, the “No” button must move away when the user attempts to interact with it (e.g., touch start / pointer down), achieving the same comedically hard-to-click effect as desktop hover/approach behavior.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "make this feature workable for all user like android and ios both too"
+        ]
+      },
+      "acceptanceCriteria": [
+        "On iOS Safari/Chrome and Android Chrome, attempting to tap the “No” button causes it to move away before a click action can be completed (or otherwise prevents a stable successful tap).",
+        "On desktop, the existing flee-on-approach behavior continues to work (e.g., via pointer movement near the button).",
+        "The “No” button remains visible within the viewport after moving (it must not move off-screen).",
+        "The interaction does not rely on hover-only events; it must be triggered via pointer/touch-capable events on mobile."
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "text": "Remove or refactor any now-unused code paths and imports introduced solely to support the removed “No” confirmation overlay, ensuring the codebase has no dead references to `NoConfirmationOverlay` or its related state/handlers.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "dont give a message box"
+        ]
+      },
+      "acceptanceCriteria": [
+        "`frontend/src/App.tsx` no longer imports or conditionally renders `NoConfirmationOverlay`, and no longer keeps state solely for showing/hiding it.",
+        "There are no unused imports/variables related to the removed overlay (TypeScript build/lint passes without unused-symbol errors in the modified files)."
       ]
     }
   ],
   "constraints": [
-    "Do not change any existing Valentine’s Day page functionality (Yes/No interactions, overlay, parallax hearts, etc.) as part of this request.",
-    "Domain names must be 5–50 characters and contain only letters, numbers, and hyphens.",
-    "Use English for any user-facing text."
+    "Do not edit files under the immutable frontend paths listed in SYSTEM_CONTEXT (e.g., frontend/src/hooks/useInternetIdentity.ts(x), frontend/src/hooks/useActor.ts, frontend/src/main.tsx, frontend/src/components/ui).",
+    "Keep the Valentine page compatible with mobile browsers (Android and iOS) and maintain the existing minimal-dependency approach.",
+    "Do not add or display any additional image assets; preserve the existing constraint that the app displays only the single allowed generated image asset (if present elsewhere in the project)."
   ],
   "nonGoals": [
-    "Adding new Valentine’s Day features, animations, or UI content unrelated to domain configuration.",
-    "Backend feature development (the backend currently has no app logic and does not need to change for domain naming unless strictly required by the platform)."
+    "Adding any new confirmation dialogs, popups, toasts, or message boxes for the “No” flow.",
+    "Changing the “Yes” flow behavior or adding new Valentine interactions unrelated to the fleeing “No” button.",
+    "Backend changes (this is a frontend-only interaction change)."
   ],
   "imageRequirements": {
     "required": [],
     "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
   }
 }

@@ -1,35 +1,27 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-10T18:11:44.740Z",
-  "summary": "Diff adds a frontend “Change Domain” dialog with client-side validation, and a backend `deployApp(domainName)` method that validates and traps on invalid input. However, the diff does not show any mechanism that actually applies/persists the domain as the app’s deployment domain beyond validation.",
-  "missing_requirements": [
-    {
-      "id": "REQ-12",
-      "requirement": "A valid domain value (5–50 chars, letters/numbers/hyphens only) is accepted and used for the deployment domain (i.e., actually updates/sets the deployment domain, not just validated).",
-      "reason": "Backend `deployApp` currently only runs validation and then does nothing on success; there is no evidence of updating/storing a domain or calling a platform API to set the deployment domain.",
-      "evidence": [
-        "backend/main.mo (deployApp validates then returns; no update logic shown)"
-      ]
-    }
-  ],
+  "generatedAt": "2026-02-10T18:22:51.493Z",
+  "summary": "The diff implements a pointer/touch-capable fleeing behavior for the “No” button and removes any overlay usage from `App.tsx`, but it also introduces/retains an unrelated dialog (`DeploymentDomainDialog`) that was not requested in the BuildRequest. The `NoConfirmationOverlay` component file still exists (and contains the old overlay strings per the summaries), though it does not appear to be imported/exported in the shown changes.",
+  "missing_requirements": [],
   "hallucinated_features": [
     {
-      "description": "Added a backend migration module with a no-op `run` function.",
-      "reason": "REQ-12 is about enabling domain changes and validation; the diff does not provide evidence that a migration module is required for that, and it contains no domain-related logic.",
+      "description": "Added/rendered `DeploymentDomainDialog` (a dialog/popup UI) in the main App footer, unrelated to the fleeing “No” button requirements.",
+      "reason": "BuildRequest is specifically about removing the “No” confirmation overlay and making the “No” button flee on mobile/desktop; it does not request adding any new dialogs or deployment-domain UI.",
       "evidence": [
-        "backend/migration.mo"
+        "frontend/src/App.tsx",
+        "frontend-file-summaries.txt (mentions `frontend/src/features/deployment/DeploymentDomainDialog.tsx` as a shadcn/ui Dialog)"
       ]
     }
   ],
-  "confidence": 0.68,
+  "confidence": 0.62,
   "changed_files": [
-    "backend/main.mo",
-    "backend/migration.mo",
     "frontend-file-summaries.txt",
     "frontend/src/App.tsx",
-    "frontend/src/features/deployment/DeploymentDomainDialog.tsx",
-    "frontend/src/features/deployment/validateDomain.ts",
+    "frontend/src/features/valentine/components/CTAButtons.tsx",
+    "frontend/src/features/valentine/components/NoConfirmationOverlay.tsx",
+    "frontend/src/features/valentine/hooks/useFleeingButton.ts",
+    "frontend/src/features/valentine/index.ts",
     "project_state.json"
   ]
 }

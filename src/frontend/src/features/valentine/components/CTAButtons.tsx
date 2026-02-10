@@ -2,11 +2,10 @@ import { useFleeingButton } from '../hooks/useFleeingButton';
 
 interface CTAButtonsProps {
   onYesClick: () => void;
-  onNoClick: () => void;
 }
 
-export default function CTAButtons({ onYesClick, onNoClick }: CTAButtonsProps) {
-  const { buttonRef, buttonStyle, handlePointerMove, handleClick } = useFleeingButton(onNoClick);
+export default function CTAButtons({ onYesClick }: CTAButtonsProps) {
+  const { buttonRef, buttonStyle, handlePointerMove, handlePointerDown } = useFleeingButton();
 
   return (
     <div className="relative flex flex-col items-center gap-6 sm:flex-row sm:gap-8">
@@ -21,7 +20,7 @@ export default function CTAButtons({ onYesClick, onNoClick }: CTAButtonsProps) {
       <button
         ref={buttonRef}
         onPointerMove={handlePointerMove}
-        onClick={handleClick}
+        onPointerDown={handlePointerDown}
         className="no-button rounded-full border-2 border-valentine-muted bg-white/80 px-12 py-4 text-xl font-bold text-valentine-muted shadow-md transition-all hover:bg-white active:scale-95"
         style={buttonStyle}
       >

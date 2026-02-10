@@ -1,9 +1,9 @@
 import Text "mo:core/Text";
 import Runtime "mo:core/Runtime";
 import Iter "mo:core/Iter";
-import Migration "migration";
 
-(with migration = Migration.run)
+
+
 actor {
   module DomainName {
     public type IllegalDomainName = {

@@ -1,32 +1,68 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Enable updating deployment domain with platform validation",
+  "title": "Mobile-friendly fleeing “No” button with overlay removed",
   "requirements": [
     {
-      "id": "REQ-12",
-      "summary": "Add a supported UI flow to set/update the deployment domain name multiple times, with strict client-side validation and clear English errors, then trigger deployment using the existing backend actor capability.",
+      "id": "REQ-13",
+      "summary": "Remove the “No” confirmation overlay so “No” only performs fleeing behavior with no modal/popup UI.",
       "acceptanceCriteria": [
-        "There is a supported way to set/update the deployment domain name for this app again (not a one-time-only setting).",
-        "Any attempted domain value that contains disallowed characters (anything other than letters, numbers, hyphens) is rejected with an English validation message.",
-        "Any attempted domain value shorter than 5 characters or longer than 50 characters is rejected with an English validation message.",
-        "A valid domain value (5–50 chars, letters/numbers/hyphens only) is accepted and used for the deployment domain without breaking the existing app behavior."
+        "On desktop, clicking the “No” button does not open any overlay/modal and does not show any confirmation UI.",
+        "The component `NoConfirmationOverlay` is not rendered anywhere in the app (no UI, no state toggles that display it).",
+        "There are no remaining user-facing strings related to the removed confirmation overlay (e.g., “Are you REALLY sure?”) displayed anywhere in the UI."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/features/deployment/validateDomain.ts",
-          "operation": "create",
-          "description": "Implement a domain validation helper enforcing the platform rules (length 5–50; allowed characters: letters, numbers, hyphens) and returning rule-specific, clear English validation messages for invalid input."
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Remove all “No confirmation overlay” wiring: delete `NoConfirmationOverlay` import/render, remove `showNoOverlay` state and its open/close handlers, and stop passing any onNoClick handler to the Valentine CTA buttons so “No” cannot trigger an overlay."
         },
         {
-          "path": "frontend/src/features/deployment/DeploymentDomainDialog.tsx",
-          "operation": "create",
-          "description": "Create a self-contained domain settings dialog/panel that lets the user enter a domain, shows validation errors in English, and on successful validation calls the backend capability via the existing actor (useActor) to request deployment with the provided domain. Use the core-infrastructure actor wiring (useActor) for backend connection configuration. If using shadcn-ui components for the dialog/input/button, verify the component's usage instructions before implementing."
+          "path": "frontend/src/features/valentine/components/NoConfirmationOverlay.tsx",
+          "operation": "delete",
+          "description": "Delete the `NoConfirmationOverlay` component implementation so it cannot be rendered and its user-facing strings (e.g., confirmation text) are removed from the codebase."
+        }
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "summary": "Make the fleeing “No” button interaction work on touch devices by triggering movement on touch/pointer-down while preserving desktop behavior and keeping the button on-screen.",
+      "acceptanceCriteria": [
+        "On iOS Safari/Chrome and Android Chrome, attempting to tap the “No” button causes it to move away before a click action can be completed (or otherwise prevents a stable successful tap).",
+        "On desktop, the existing flee-on-approach behavior continues to work (e.g., via pointer movement near the button).",
+        "The “No” button remains visible within the viewport after moving (it must not move off-screen).",
+        "The interaction does not rely on hover-only events; it must be triggered via pointer/touch-capable events on mobile."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/valentine/hooks/useFleeingButton.ts",
+          "operation": "modify",
+          "description": "Refactor the fleeing button hook to support touch/mobile by exposing a pointer/touch-capable interaction handler (e.g., pointer down) that triggers `moveButton()` immediately and prevents a stable tap; keep the existing desktop flee-on-approach behavior (pointer movement/enter) and retain viewport clamping so the button never moves off-screen."
+        },
+        {
+          "path": "frontend/src/features/valentine/components/CTAButtons.tsx",
+          "operation": "modify",
+          "description": "Wire the updated fleeing handlers onto the “No” button using pointer/touch-capable events (e.g., onPointerDown in addition to existing pointer movement handling). Ensure the “No” button does not perform any click action beyond fleeing and remains usable on both mobile and desktop."
+        }
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "summary": "Remove dead references/imports/state associated with the removed `NoConfirmationOverlay` so there are no unused symbols or code paths.",
+      "acceptanceCriteria": [
+        "`frontend/src/App.tsx` no longer imports or conditionally renders `NoConfirmationOverlay`, and no longer keeps state solely for showing/hiding it.",
+        "There are no unused imports/variables related to the removed overlay (TypeScript build/lint passes without unused-symbol errors in the modified files)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/valentine/index.ts",
+          "operation": "modify",
+          "description": "Remove the barrel export for `NoConfirmationOverlay` to eliminate dead references and prevent accidental re-imports."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Wire the new DeploymentDomainDialog into the existing app UI (e.g., as a small footer action) without altering any existing Valentine’s Day interactions (Yes/No behavior, overlay, parallax hearts, meme reveal). Ensure all new user-facing text is English and that domain changes can be performed repeatedly."
+          "description": "Clean up any leftover imports/handlers previously used solely for the removed overlay (ensuring no unused symbols remain after removing overlay logic)."
         }
       ]
     }

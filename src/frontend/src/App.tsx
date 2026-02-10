@@ -2,23 +2,13 @@ import { useState } from 'react';
 import ParallaxHeartsBackground from './features/valentine/components/ParallaxHeartsBackground';
 import CTAButtons from './features/valentine/components/CTAButtons';
 import MemeReveal from './features/valentine/components/MemeReveal';
-import NoConfirmationOverlay from './features/valentine/components/NoConfirmationOverlay';
 import { DeploymentDomainDialog } from './features/deployment/DeploymentDomainDialog';
 
 function App() {
   const [showMeme, setShowMeme] = useState(false);
-  const [showNoOverlay, setShowNoOverlay] = useState(false);
 
   const handleYesClick = () => {
     setShowMeme(true);
-  };
-
-  const handleNoClick = () => {
-    setShowNoOverlay(true);
-  };
-
-  const handleCloseOverlay = () => {
-    setShowNoOverlay(false);
   };
 
   return (
@@ -36,14 +26,12 @@ function App() {
             <p className="max-w-md text-lg text-valentine-text md:text-xl">
               Choose wisely... 💕
             </p>
-            <CTAButtons onYesClick={handleYesClick} onNoClick={handleNoClick} />
+            <CTAButtons onYesClick={handleYesClick} />
           </div>
         ) : (
           <MemeReveal />
         )}
       </main>
-
-      {showNoOverlay && <NoConfirmationOverlay onClose={handleCloseOverlay} />}
 
       <footer className="relative z-10 py-6 text-center text-sm text-valentine-text/70">
         <p>

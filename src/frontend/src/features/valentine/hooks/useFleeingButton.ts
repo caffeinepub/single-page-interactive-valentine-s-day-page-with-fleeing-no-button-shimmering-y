@@ -5,7 +5,7 @@ interface ButtonPosition {
   top: string;
 }
 
-export function useFleeingButton(onNoClick: () => void) {
+export function useFleeingButton() {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [buttonStyle, setButtonStyle] = useState<ButtonPosition>({
     left: 'auto',
@@ -68,12 +68,12 @@ export function useFleeingButton(onNoClick: () => void) {
     [moveButton]
   );
 
-  const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handlePointerDown = useCallback(
+    (e: React.PointerEvent<HTMLButtonElement>) => {
       e.preventDefault();
-      onNoClick();
+      moveButton();
     },
-    [onNoClick]
+    [moveButton]
   );
 
   return {
@@ -84,6 +84,6 @@ export function useFleeingButton(onNoClick: () => void) {
       transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)',
     },
     handlePointerMove,
-    handleClick,
+    handlePointerDown,
   };
 }
