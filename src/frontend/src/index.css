@@ -1,0 +1,247 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.625rem;
+        --background: 0.98 0.05 340;
+        --foreground: 0.25 0.08 340;
+        --card: 1 0 0;
+        --card-foreground: 0.145 0 0;
+        --popover: 1 0 0;
+        --popover-foreground: 0.145 0 0;
+        --primary: 0.65 0.25 340;
+        --primary-foreground: 0.985 0 0;
+        --secondary: 0.95 0.03 340;
+        --secondary-foreground: 0.25 0.08 340;
+        --muted: 0.85 0.05 340;
+        --muted-foreground: 0.55 0.08 340;
+        --accent: 0.65 0.25 340;
+        --accent-foreground: 0.985 0 0;
+        --destructive: 0.577 0.245 27.325;
+        --destructive-foreground: 0.985 0 0;
+        --border: 0.92 0.03 340;
+        --input: 0.92 0.03 340;
+        --ring: 0.65 0.25 340;
+        --chart-1: 0.646 0.222 41.116;
+        --chart-2: 0.6 0.118 184.704;
+        --chart-3: 0.398 0.07 227.392;
+        --chart-4: 0.828 0.189 84.429;
+        --chart-5: 0.769 0.188 70.08;
+        --sidebar: 0.985 0 0;
+        --sidebar-foreground: 0.145 0 0;
+        --sidebar-primary: 0.205 0 0;
+        --sidebar-primary-foreground: 0.985 0 0;
+        --sidebar-accent: 0.97 0 0;
+        --sidebar-accent-foreground: 0.205 0 0;
+        --sidebar-border: 0.922 0 0;
+        --sidebar-ring: 0.708 0 0;
+        
+        /* Valentine's Day custom colors */
+        --valentine-pink: 0.65 0.25 340;
+        --valentine-light-pink: 0.95 0.08 340;
+        --valentine-white: 0.99 0 0;
+        --valentine-text: 0.35 0.08 340;
+        --valentine-muted: 0.65 0.12 340;
+        --valentine-accent: 0.60 0.28 350;
+    }
+
+    .dark {
+        --background: 0.20 0.08 340;
+        --foreground: 0.95 0.03 340;
+        --card: 0.25 0.08 340;
+        --card-foreground: 0.985 0 0;
+        --popover: 0.269 0 0;
+        --popover-foreground: 0.985 0 0;
+        --primary: 0.75 0.22 340;
+        --primary-foreground: 0.15 0.08 340;
+        --secondary: 0.30 0.08 340;
+        --secondary-foreground: 0.95 0.03 340;
+        --muted: 0.35 0.08 340;
+        --muted-foreground: 0.70 0.08 340;
+        --accent: 0.45 0.15 340;
+        --accent-foreground: 0.985 0 0;
+        --destructive: 0.704 0.191 22.216;
+        --destructive-foreground: 0.205 0 0;
+        --border: 0.35 0.08 340;
+        --input: 0.35 0.08 340;
+        --ring: 0.65 0.20 340;
+        --chart-1: 0.488 0.243 264.376;
+        --chart-2: 0.696 0.17 162.48;
+        --chart-3: 0.769 0.188 70.08;
+        --chart-4: 0.627 0.265 303.9;
+        --chart-5: 0.645 0.246 16.439;
+        --sidebar: 0.205 0 0;
+        --sidebar-foreground: 0.985 0 0;
+        --sidebar-primary: 0.488 0.243 264.376;
+        --sidebar-primary-foreground: 0.985 0 0;
+        --sidebar-accent: 0.269 0 0;
+        --sidebar-accent-foreground: 0.985 0 0;
+        --sidebar-border: 1 0 0 / 10%;
+        --sidebar-ring: 0.439 0 0;
+        
+        /* Valentine's Day dark mode colors */
+        --valentine-pink: 0.75 0.22 340;
+        --valentine-light-pink: 0.85 0.12 340;
+        --valentine-white: 0.95 0.02 340;
+        --valentine-text: 0.85 0.05 340;
+        --valentine-muted: 0.60 0.15 340;
+        --valentine-accent: 0.65 0.25 350;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        background: linear-gradient(135deg, oklch(var(--valentine-light-pink)) 0%, oklch(var(--valentine-white)) 100%);
+        min-height: 100vh;
+    }
+}
+
+@layer utilities {
+    .valentine-gradient {
+        background: linear-gradient(135deg, oklch(var(--valentine-accent)) 0%, oklch(var(--valentine-pink)) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .valentine-title {
+        color: oklch(var(--valentine-text));
+    }
+    
+    .valentine-text {
+        color: oklch(var(--valentine-text));
+    }
+    
+    .valentine-accent {
+        color: oklch(var(--valentine-accent));
+    }
+    
+    .valentine-muted {
+        color: oklch(var(--valentine-muted));
+    }
+}
+
+/* Shimmer effect for Yes button */
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+}
+
+.shimmer-effect {
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 100%
+    );
+    animation: shimmer 3s infinite;
+    width: 200%;
+    height: 200%;
+}
+
+.yes-button {
+    background: linear-gradient(135deg, oklch(var(--valentine-accent)) 0%, oklch(0.55 0.30 350) 100%);
+}
+
+/* Shake animation for overlay */
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0) rotate(0deg);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-2px) rotate(-0.5deg);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(2px) rotate(0.5deg);
+    }
+}
+
+.shake-animation {
+    animation: shake 0.5s ease-in-out infinite;
+}
+
+/* Meme reveal animation */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.meme-reveal {
+    animation: fadeInScale 0.5s ease-out;
+}
+
+/* No button transition */
+.no-button {
+    will-change: transform, left, top;
+}
+
+/* Overlay backdrop */
+.overlay-backdrop {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .valentine-title {
+        font-size: 2.5rem;
+    }
+    
+    .yes-button,
+    .no-button {
+        font-size: 1.125rem;
+        padding: 0.875rem 2.5rem;
+    }
+}
+
+/* Touch-friendly interactions for iPad */
+@media (hover: none) and (pointer: coarse) {
+    .yes-button:active {
+        transform: scale(0.95);
+    }
+    
+    .no-button:active {
+        transform: scale(0.95);
+    }
+}
+
+/* Ensure smooth animations on iPad */
+@media (prefers-reduced-motion: no-preference) {
+    * {
+        scroll-behavior: smooth;
+    }
+}
+
+/* GPU acceleration hints */
+.yes-button,
+.no-button,
+.shimmer-effect,
+.shake-animation,
+.meme-reveal {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}

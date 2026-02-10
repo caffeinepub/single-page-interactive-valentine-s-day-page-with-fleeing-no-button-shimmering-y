@@ -1,2 +1,3 @@
-# single-page-interactive-valentine-s-day-page-with-fleeing-no-button-shimmering-y
-Exported from Caffeine project: Single-page interactive Valentine’s Day page with fleeing No button, shimmering Yes button, meme reveal, and parallax hearts
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

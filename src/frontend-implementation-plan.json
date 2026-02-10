@@ -1,0 +1,34 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Enable updating deployment domain with platform validation",
+  "requirements": [
+    {
+      "id": "REQ-12",
+      "summary": "Add a supported UI flow to set/update the deployment domain name multiple times, with strict client-side validation and clear English errors, then trigger deployment using the existing backend actor capability.",
+      "acceptanceCriteria": [
+        "There is a supported way to set/update the deployment domain name for this app again (not a one-time-only setting).",
+        "Any attempted domain value that contains disallowed characters (anything other than letters, numbers, hyphens) is rejected with an English validation message.",
+        "Any attempted domain value shorter than 5 characters or longer than 50 characters is rejected with an English validation message.",
+        "A valid domain value (5–50 chars, letters/numbers/hyphens only) is accepted and used for the deployment domain without breaking the existing app behavior."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/features/deployment/validateDomain.ts",
+          "operation": "create",
+          "description": "Implement a domain validation helper enforcing the platform rules (length 5–50; allowed characters: letters, numbers, hyphens) and returning rule-specific, clear English validation messages for invalid input."
+        },
+        {
+          "path": "frontend/src/features/deployment/DeploymentDomainDialog.tsx",
+          "operation": "create",
+          "description": "Create a self-contained domain settings dialog/panel that lets the user enter a domain, shows validation errors in English, and on successful validation calls the backend capability via the existing actor (useActor) to request deployment with the provided domain. Use the core-infrastructure actor wiring (useActor) for backend connection configuration. If using shadcn-ui components for the dialog/input/button, verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire the new DeploymentDomainDialog into the existing app UI (e.g., as a small footer action) without altering any existing Valentine’s Day interactions (Yes/No behavior, overlay, parallax hearts, meme reveal). Ensure all new user-facing text is English and that domain changes can be performed repeatedly."
+        }
+      ]
+    }
+  ]
+}
